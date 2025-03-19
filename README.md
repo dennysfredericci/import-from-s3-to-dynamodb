@@ -48,27 +48,3 @@ sam delete --stack-name dynamodb-import-test
 aws s3 rb s3://vehicles-import-dynamodb --force
 ```
 
-
-# Cloud Formation DynamoDB Import from S3
-
-This project is a example of how to import data from a CSV file in S3 to a DynamoDB table using Cloud Formation.
-
-I have done a test with five million records and it took 19 minutes.
-
-NOTE: During the Amazon S3 import process, DynamoDB creates a new target table that will be imported into. Import into existing tables is not currently supported by this feature.
-https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/S3DataImport.HowItWorks.html
-
-
-
-
-
-
-aws s3 mb s3://vehicles-import-dynamodb
-aws s3 cp ./s3/one-hundred.csv s3://vehicles-import-dynamodb
-aws s3 cp ./s3/five-million.csv s3://vehicles-import-dynamodb
-
-sam deploy --template-file ./cf/dynamodb-create-import.yml --stack-name dynamodb-import-test --capabilities CAPABILITY_IAM
-
-sam delete --stack-name dynamodb-import-test
-
-aws s3 rb s3://vehicles-import-dynamodb --force
